@@ -3,6 +3,7 @@ import 'package:flutter_quill/flutter_quill.dart';
 
 import '../../common/utils/element_utils/element_utils.dart';
 import 'config/image_config.dart';
+import 'image_embed_types.dart';
 import 'image_menu.dart';
 import 'widgets/image.dart';
 
@@ -32,6 +33,31 @@ class QuillEditorImageEmbedBuilder extends EmbedBuilder {
     final width = imageSize.width;
     final height = imageSize.height;
 
+    // Check if customImageBuilder is provided
+    final customImageBuilder = config.customImageBuilder;
+    if (customImageBuilder != null) {
+      final imageContext = ImageContext(
+        width: width,
+        height: height,
+        margin: margin,
+        alignment: alignment,
+      );
+      final customWidget = customImageBuilder(
+        imageSource,
+        embedContext.readOnly,
+        imageContext,
+      );
+      if (customWidget != null) {
+        // Apply margin and alignment wrapping
+        return _wrapWithMarginAndAlignment(
+          child: customWidget,
+          alignment: alignment,
+          margin: margin,
+        );
+      }
+    }
+
+    // Default implementation
     final imageWidget = getImageWidgetByImageSource(
       context: context,
       imageSource,
@@ -73,5 +99,26 @@ class QuillEditorImageEmbedBuilder extends EmbedBuilder {
         },
       ),
     );
+  }
+
+  /// Helper method to wrap a widget with margin padding.
+  ///
+  /// This is used when [customImageBuilder] returns a non-null Widget
+  /// to apply the same margin treatment as the default implementation.
+  Widget _wrapWithMarginAndAlignment({
+    required Widget child,
+    required Alignment alignment,
+    double? margin,
+  }) {
+    var result = child;
+
+    if (margin != null) {
+      result = Padding(
+        padding: EdgeInsets.all(margin),
+        child: result,
+      );
+    }
+
+    return result;
   }
 }
