@@ -4,33 +4,53 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('ImageContext', () {
+    group('required offset property', () {
+      test('offset is required and correctly assigned', () {
+        const imageContext = ImageContext(offset: 42);
+
+        expect(imageContext.offset, equals(42));
+      });
+
+      test('offset can be zero', () {
+        const imageContext = ImageContext(offset: 0);
+
+        expect(imageContext.offset, equals(0));
+      });
+
+      test('offset can be a large value', () {
+        const imageContext = ImageContext(offset: 999999);
+
+        expect(imageContext.offset, equals(999999));
+      });
+    });
+
     group('default values', () {
       test('alignment defaults to Alignment.center when not specified', () {
-        const imageContext = ImageContext();
+        const imageContext = ImageContext(offset: 0);
 
         expect(imageContext.alignment, equals(Alignment.center));
       });
 
       test('width defaults to null when not specified', () {
-        const imageContext = ImageContext();
+        const imageContext = ImageContext(offset: 0);
 
         expect(imageContext.width, isNull);
       });
 
       test('height defaults to null when not specified', () {
-        const imageContext = ImageContext();
+        const imageContext = ImageContext(offset: 0);
 
         expect(imageContext.height, isNull);
       });
 
       test('margin defaults to null when not specified', () {
-        const imageContext = ImageContext();
+        const imageContext = ImageContext(offset: 0);
 
         expect(imageContext.margin, isNull);
       });
 
       test('all optional properties default correctly', () {
-        const imageContext = ImageContext();
+        const imageContext = ImageContext(offset: 0);
 
         expect(imageContext.width, isNull);
         expect(imageContext.height, isNull);
@@ -41,18 +61,21 @@ void main() {
 
     group('complete parameters', () {
       test('all parameters are correctly assigned', () {
+        const offset = 10;
         const width = 200.0;
         const height = 150.0;
         const margin = 10.0;
         const alignment = Alignment.topLeft;
 
         const imageContext = ImageContext(
+          offset: offset,
           width: width,
           height: height,
           margin: margin,
           alignment: alignment,
         );
 
+        expect(imageContext.offset, equals(offset));
         expect(imageContext.width, equals(width));
         expect(imageContext.height, equals(height));
         expect(imageContext.margin, equals(margin));
@@ -62,7 +85,7 @@ void main() {
       test('width is correctly assigned when only width is provided', () {
         const width = 300.0;
 
-        const imageContext = ImageContext(width: width);
+        const imageContext = ImageContext(offset: 0, width: width);
 
         expect(imageContext.width, equals(width));
         expect(imageContext.height, isNull);
@@ -73,7 +96,7 @@ void main() {
       test('height is correctly assigned when only height is provided', () {
         const height = 250.0;
 
-        const imageContext = ImageContext(height: height);
+        const imageContext = ImageContext(offset: 0, height: height);
 
         expect(imageContext.width, isNull);
         expect(imageContext.height, equals(height));
@@ -84,7 +107,7 @@ void main() {
       test('margin is correctly assigned when only margin is provided', () {
         const margin = 15.0;
 
-        const imageContext = ImageContext(margin: margin);
+        const imageContext = ImageContext(offset: 0, margin: margin);
 
         expect(imageContext.width, isNull);
         expect(imageContext.height, isNull);
@@ -96,7 +119,7 @@ void main() {
           () {
         const alignment = Alignment.bottomRight;
 
-        const imageContext = ImageContext(alignment: alignment);
+        const imageContext = ImageContext(offset: 0, alignment: alignment);
 
         expect(imageContext.width, isNull);
         expect(imageContext.height, isNull);
@@ -107,25 +130,26 @@ void main() {
 
     group('null properties', () {
       test('width can be explicitly set to null', () {
-        const imageContext = ImageContext(width: null);
+        const imageContext = ImageContext(offset: 0, width: null);
 
         expect(imageContext.width, isNull);
       });
 
       test('height can be explicitly set to null', () {
-        const imageContext = ImageContext(height: null);
+        const imageContext = ImageContext(offset: 0, height: null);
 
         expect(imageContext.height, isNull);
       });
 
       test('margin can be explicitly set to null', () {
-        const imageContext = ImageContext(margin: null);
+        const imageContext = ImageContext(offset: 0, margin: null);
 
         expect(imageContext.margin, isNull);
       });
 
       test('all nullable properties can be null simultaneously', () {
         const imageContext = ImageContext(
+          offset: 0,
           width: null,
           height: null,
           margin: null,
@@ -139,42 +163,50 @@ void main() {
 
     group('alignment variations', () {
       test('supports Alignment.topLeft', () {
-        const imageContext = ImageContext(alignment: Alignment.topLeft);
+        const imageContext =
+            ImageContext(offset: 0, alignment: Alignment.topLeft);
         expect(imageContext.alignment, equals(Alignment.topLeft));
       });
 
       test('supports Alignment.topCenter', () {
-        const imageContext = ImageContext(alignment: Alignment.topCenter);
+        const imageContext =
+            ImageContext(offset: 0, alignment: Alignment.topCenter);
         expect(imageContext.alignment, equals(Alignment.topCenter));
       });
 
       test('supports Alignment.topRight', () {
-        const imageContext = ImageContext(alignment: Alignment.topRight);
+        const imageContext =
+            ImageContext(offset: 0, alignment: Alignment.topRight);
         expect(imageContext.alignment, equals(Alignment.topRight));
       });
 
       test('supports Alignment.centerLeft', () {
-        const imageContext = ImageContext(alignment: Alignment.centerLeft);
+        const imageContext =
+            ImageContext(offset: 0, alignment: Alignment.centerLeft);
         expect(imageContext.alignment, equals(Alignment.centerLeft));
       });
 
       test('supports Alignment.centerRight', () {
-        const imageContext = ImageContext(alignment: Alignment.centerRight);
+        const imageContext =
+            ImageContext(offset: 0, alignment: Alignment.centerRight);
         expect(imageContext.alignment, equals(Alignment.centerRight));
       });
 
       test('supports Alignment.bottomLeft', () {
-        const imageContext = ImageContext(alignment: Alignment.bottomLeft);
+        const imageContext =
+            ImageContext(offset: 0, alignment: Alignment.bottomLeft);
         expect(imageContext.alignment, equals(Alignment.bottomLeft));
       });
 
       test('supports Alignment.bottomCenter', () {
-        const imageContext = ImageContext(alignment: Alignment.bottomCenter);
+        const imageContext =
+            ImageContext(offset: 0, alignment: Alignment.bottomCenter);
         expect(imageContext.alignment, equals(Alignment.bottomCenter));
       });
 
       test('supports Alignment.bottomRight', () {
-        const imageContext = ImageContext(alignment: Alignment.bottomRight);
+        const imageContext =
+            ImageContext(offset: 0, alignment: Alignment.bottomRight);
         expect(imageContext.alignment, equals(Alignment.bottomRight));
       });
     });
@@ -184,6 +216,7 @@ void main() {
         // This test verifies that ImageContext can be instantiated as a
         // compile-time constant, which is a requirement for @immutable classes
         const imageContext1 = ImageContext(
+          offset: 5,
           width: 100.0,
           height: 100.0,
           margin: 5.0,
@@ -191,6 +224,7 @@ void main() {
         );
 
         const imageContext2 = ImageContext(
+          offset: 5,
           width: 100.0,
           height: 100.0,
           margin: 5.0,
@@ -204,23 +238,24 @@ void main() {
 
     group('edge cases', () {
       test('accepts zero values for width', () {
-        const imageContext = ImageContext(width: 0.0);
+        const imageContext = ImageContext(offset: 0, width: 0.0);
         expect(imageContext.width, equals(0.0));
       });
 
       test('accepts zero values for height', () {
-        const imageContext = ImageContext(height: 0.0);
+        const imageContext = ImageContext(offset: 0, height: 0.0);
         expect(imageContext.height, equals(0.0));
       });
 
       test('accepts zero values for margin', () {
-        const imageContext = ImageContext(margin: 0.0);
+        const imageContext = ImageContext(offset: 0, margin: 0.0);
         expect(imageContext.margin, equals(0.0));
       });
 
       test('accepts large values for dimensions', () {
         const largeValue = 10000.0;
         const imageContext = ImageContext(
+          offset: 0,
           width: largeValue,
           height: largeValue,
           margin: largeValue,
@@ -233,6 +268,7 @@ void main() {
 
       test('accepts fractional values', () {
         const imageContext = ImageContext(
+          offset: 0,
           width: 123.456,
           height: 78.9,
           margin: 1.5,
@@ -241,6 +277,22 @@ void main() {
         expect(imageContext.width, equals(123.456));
         expect(imageContext.height, equals(78.9));
         expect(imageContext.margin, equals(1.5));
+      });
+    });
+
+    group('deletion use case', () {
+      test('offset can be used for document removal operations', () {
+        // This test documents the intended use case of the offset property
+        const imageContext = ImageContext(
+          offset: 42,
+          width: 200,
+          height: 150,
+        );
+
+        // The offset should be usable for deletion operations:
+        // controller.replaceText(imageContext.offset, 1, '', selection);
+        expect(imageContext.offset, equals(42));
+        expect(imageContext.offset, isA<int>());
       });
     });
   });

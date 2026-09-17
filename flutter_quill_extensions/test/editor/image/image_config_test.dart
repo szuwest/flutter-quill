@@ -39,7 +39,7 @@ void main() {
         final result = config.customImageBuilder!(
           'test.png',
           false,
-          const ImageContext(),
+          const ImageContext(offset: 0),
         );
         expect(result, isNull);
       });
@@ -59,7 +59,7 @@ void main() {
         final result = config.customImageBuilder!(
           'test.png',
           false,
-          const ImageContext(),
+          const ImageContext(offset: 0),
         );
         expect(result, equals(testWidget));
       });
@@ -84,6 +84,7 @@ void main() {
         const testImageUrl = 'https://example.com/image.png';
         const testIsReadOnly = true;
         const testContext = ImageContext(
+          offset: 5,
           width: 100,
           height: 200,
           margin: 10,
@@ -95,6 +96,7 @@ void main() {
         expect(capturedImageUrl, equals(testImageUrl));
         expect(capturedIsReadOnly, equals(testIsReadOnly));
         expect(capturedContext, equals(testContext));
+        expect(capturedContext?.offset, equals(5));
         expect(capturedContext?.width, equals(100));
         expect(capturedContext?.height, equals(200));
         expect(capturedContext?.margin, equals(10));

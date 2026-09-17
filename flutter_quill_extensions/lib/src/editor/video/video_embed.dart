@@ -3,6 +3,7 @@ import 'package:flutter_quill/flutter_quill.dart';
 
 import '../../common/utils/element_utils/element_utils.dart';
 import 'config/video_config.dart';
+import 'video_embed_types.dart';
 import 'widgets/video_app.dart';
 
 class QuillEditorVideoEmbedBuilder extends EmbedBuilder {
@@ -25,14 +26,6 @@ class QuillEditorVideoEmbedBuilder extends EmbedBuilder {
   ) {
     final videoUrl = embedContext.node.value.data;
 
-    final customVideoBuilder = config.customVideoBuilder;
-    if (customVideoBuilder != null) {
-      final videoWidget = customVideoBuilder(videoUrl, embedContext.readOnly);
-      if (videoWidget != null) {
-        return videoWidget;
-      }
-    }
-
     final ((elementSize), margin, alignment) = getElementAttributes(
       embedContext.node,
       context,
@@ -40,6 +33,35 @@ class QuillEditorVideoEmbedBuilder extends EmbedBuilder {
 
     final width = elementSize.width;
     final height = elementSize.height;
+
+    // Check if customVideoBuilder is provided
+    final customVideoBuilder = config.customVideoBuilder;
+    if (customVideoBuilder != null) {
+      final videoContext = VideoContext(
+        offset: embedContext.node.documentOffset,
+        width: width,
+        height: height,
+        margin: margin,
+        alignment: alignment,
+      );
+      final customWidget = customVideoBuilder(
+        videoUrl,
+        embedContext.readOnly,
+        videoContext,
+      );
+      if (customWidget != null) {
+        // Apply margin wrapping if needed
+        if (margin != null) {
+          return Padding(
+            padding: EdgeInsets.all(margin),
+            child: customWidget,
+          );
+        }
+        return customWidget;
+      }
+    }
+
+    // Default implementation
     return Container(
       width: width,
       height: height,

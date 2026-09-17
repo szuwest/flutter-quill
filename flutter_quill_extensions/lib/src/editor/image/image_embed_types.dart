@@ -110,8 +110,8 @@ typedef CustomImageEmbedBuilder = Widget? Function(
 
 /// Context information passed to [CustomImageEmbedBuilder].
 ///
-/// Contains image dimensions, margin, and alignment information parsed from
-/// the embed node's element style attributes.
+/// Contains image dimensions, margin, alignment, and document offset
+/// information parsed from the embed node's element style attributes.
 ///
 /// Example usage:
 /// ```dart
@@ -121,12 +121,26 @@ typedef CustomImageEmbedBuilder = Widget? Function(
 ///     width: imageContext.width,
 ///     height: imageContext.height,
 ///     alignment: imageContext.alignment,
+///     onDelete: () {
+///       // Use offset to remove the embed from document
+///       controller.replaceText(
+///         imageContext.offset,
+///         1,
+///         '',
+///         TextSelection.collapsed(offset: imageContext.offset),
+///       );
+///       // Then clean up the local file
+///       MediaFileUtils.deleteImageFile(imageUrl);
+///     },
 ///   );
 /// },
 /// ```
 @immutable
 class ImageContext {
   /// Creates an [ImageContext] with the given properties.
+  ///
+  /// [offset] is required and represents the position of this embed node
+  /// in the document, useful for deletion operations.
   ///
   /// [width] and [height] are optional and represent the image dimensions
   /// parsed from element style attributes. When null, the image uses its
@@ -138,6 +152,7 @@ class ImageContext {
   /// [alignment] defaults to [Alignment.center] when not specified in the
   /// element attributes.
   const ImageContext({
+    required this.offset,
     this.width,
     this.height,
     this.margin,
@@ -165,4 +180,18 @@ class ImageContext {
   ///
   /// Defaults to [Alignment.center] when not specified in element attributes.
   final Alignment alignment;
+
+  /// The offset (position) of this embed node in the document.
+  ///
+  /// This is useful for deletion operations. To remove this image from the
+  /// document, use:
+  /// ```dart
+  /// controller.replaceText(
+  ///   imageContext.offset,
+  ///   1,
+  ///   '',
+  ///   TextSelection.collapsed(offset: imageContext.offset),
+  /// );
+  /// ```
+  final int offset;
 }

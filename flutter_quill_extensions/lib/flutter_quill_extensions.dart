@@ -1,6 +1,7 @@
 library;
 
 export 'src/common/extensions/controller_ext.dart';
+export 'src/common/utils/media_file_utils.dart';
 export 'src/editor/image/config/image_config.dart';
 export 'src/editor/image/config/image_web_config.dart';
 export 'src/editor/image/image_embed.dart';
@@ -9,6 +10,7 @@ export 'src/editor/image/image_web_embed.dart';
 export 'src/editor/video/config/video_config.dart';
 export 'src/editor/video/config/video_web_config.dart';
 export 'src/editor/video/video_embed.dart';
+export 'src/editor/video/video_embed_types.dart';
 export 'src/editor/video/video_web_embed.dart';
 export 'src/flutter_quill_embeds.dart';
 export 'src/toolbar/camera/camera_button.dart';

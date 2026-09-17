@@ -41,6 +41,7 @@ class QuillEditorImageEmbedBuilder extends EmbedBuilder {
         height: height,
         margin: margin,
         alignment: alignment,
+        offset: embedContext.node.documentOffset,
       );
       final customWidget = customImageBuilder(
         imageSource,

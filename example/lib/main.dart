@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                       videoEmbedConfig: QuillEditorVideoEmbedConfig(
-                        customVideoBuilder: (videoUrl, readOnly) {
+                        customVideoBuilder: (videoUrl, readOnly, videoContext) {
                           // To load YouTube videos https://github.com/singerdmx/flutter-quill/releases/tag/v10.8.0
                           return null;
                         },
